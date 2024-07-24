@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Build Your Skincare Routine</title>
+    <link rel="stylesheet" href="style.css">
+    <script>
+      function buildRoutine() {
+        // Get the user's input for skin type and skincare goals
+        const skinType = document.getElementById('skin-type').value;
+        const skincareGoals = Array.from(document.querySelectorAll('input[name="skincare-goals"]:checked')).map(option => option.value);
+
+        // Check if the user has selected a skin type and at least one skincare goal
+        if (skinType && skincareGoals.length > 0 && skincareGoals.length <= 2) {
+          // Clear any previous routine and show the "Building your routine..." message
+          const routineDiv = document.getElementById('routine');
+          routineDiv.innerHTML = '<h2>Building your routine...</h2>';
+          routineDiv.style.display = 'block';
+
+          // Create an array of products based on the user's input
+          const products = [];
+
+          if (skincareGoals.includes('anti-aging')) {
+            products.push('Retinol serum', 'Vitamin C serum');
+          }
+
+          if (skincareGoals.includes('dark-spots')) {
+            products.push('Vitamin C serum', 'Azelaic Acid based cream/serum');
+          }
+
+          if (skincareGoals.includes('skin-texture')) {
+            products.push('Exfoliating toner including either AHAs or BHAs', 'Niacinamide serum');
+          }
+
+          if (skincareGoals.includes('glowing-skin')) {
+            products.push('Snail Mucin', 'Hydrating moisturizer having hyaluronic acid');
+          }
+
+          if (skincareGoals.includes('enlarged-pores')) {
+            products.push('Pore-minimizing serum ', 'Oil-free moisturizer', 'Retinol serum');
+          }
+
+          if (skincareGoals.includes('breakouts')) {
+            products.push('Salicylic acid cleanser', 'Benzoyl peroxide spot treatment');
+          }
+
+          // Create a list of products to include in the routine
+          let productHtml = '<ul>';
+
+          if (skinType === 'oily') {
+            productHtml += '<li>Oil-free cleanser</li>';
+            productHtml += '<li>Oil-free moisturizer</li>';
+          } else if (skinType === 'dry') {
+            productHtml += '<li>Gentle cleanser</li>';
+            productHtml += '<li>Hydrating moisturizer</li>';
+          } else {
+            productHtml += '<li>Gentle cleanser</li>';
+            productHtml += '<li>Lightweight moisturizer</li>';
+          }
+
+          products.forEach(product => {
+            productHtml += `<li>${product}</li>`;
+          });
+
+          productHtml += '</ul>';
+
+          // Display the final routine to the user
+          routineDiv.innerHTML = `
+            <h2>Here's your personalized skincare routine:</h2>
+            <p>Based on your skin type (${skinType}) and skincare goals (${skincareGoals.join(', ')}), we recommend the following products:</p>
+            ${productHtml}
+            <p>Remember to use sunscreen during the day and to patch test any new products before adding them to your routine.</p>
+          `;
+        } else {
+          alert('Please select a skin type and at least one skincare goal (maximum of two).');
+        }
+      }
+    </script>
+<header>
+  <h1>2 Minutes to Find What Your Skin Needs</h1>
+</header>
+<main>
+  <form>
+    <h2>Answer the following two questions:</h2>
+    <div class="question">
+      <label for="skin-type">Q1. How would you describe the look &amp; feel of your skin?</label>
+      <select id="skin-type">
+        <option value="">-- Select One --</option>
+        <option value="oily">Oily</option>
+        <option value="dry">Dry</option>
+        <option value="combination">Combination</option>
+        <option value="normal">Normal</option>
+      </select>
+    </div>
+    <div class="question">
+      <label>Q2. What is your main skincare goal? (Max.=2)</label>
+      <br>
+      <label for="anti-aging">
+        <input type="checkbox" id="anti-aging" name="skincare-goals" value="anti-aging">Anti-aging</label>
+      <br>
+      <label for="dark-spots">
+        <input type="checkbox" id="dark-spots" name="skincare-goals" value="dark-spots">Reduce Dark Spots/Discolorations</label>
+      <br>
+      <label for="skin-texture">
+        <input type="checkbox" id="skin-texture" name="skincare-goals" value="skin-texture">Improve Skin Texture</label>
+      <br>
+      <label for="glowing-skin">
+        <input type="checkbox" id="glowing-skin" name="skincare-goals" value="glowing-skin">Radiant &amp; Glowing Skin</label>
+      <br>
+      <label for="enlarged-pores">
+        <input type="checkbox" id="enlarged-pores" name="skincare-goals" value="enlarged-pores">Reduce Enlarged Pores</label>
+      <br>
+      <label for="breakouts">
+        <input type="checkbox" id="breakouts" name="skincare-goals" value="breakouts">Diminish Acne/Breakouts</label>
+    </div>
+    <button type="button" onclick="buildRoutine()">Build My Routine</button>
+  </form>
+  <div id="routine"></div>
+</main>
+</body>
+</html>
